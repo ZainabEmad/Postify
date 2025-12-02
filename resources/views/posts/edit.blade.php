@@ -12,16 +12,6 @@
     <input type="text" value="{{ $post->title }}" name="title"
     class="form-control">
     
-  <!-- </div>
-  <div class="mb-3">
-    <label for="exampleFormControlSelect1">Writer</label>
-    <select class="form-control" id="" name="user">
-      <option value="1">zainab</option>
-      <option value="2">hala</option>
-      <option value="3">sara</option>
-      <option value="4">hoda</option>
-    </select>
-  </div> -->
 
   <div class="mb-3">
     <label for="">Description</label>

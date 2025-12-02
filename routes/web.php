@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Database\Schema\PostgresBuilder;
 use Illuminate\Support\Facades\Route;
 
@@ -45,3 +46,9 @@ Route::delete('/posts/{id}', [PostController::class, 'destroy'])
 
 Route::get('/search/post', [PostController::class, 'searchPost'])
      ->name('search.post');
+
+
+Route::resource('/users', UserController::class);
+
+Route::get('/user/posts/{id}', [UserController::class, 'posts'])
+     ->name('user.posts');

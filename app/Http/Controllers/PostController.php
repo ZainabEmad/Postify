@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -21,11 +22,12 @@ class PostController extends Controller
     }
 
     public function getAllPosts(){
-        $posts = Post::paginate();
+        $posts = Post::orderBy('id','DESC')->paginate();
         return view('posts.index', ['posts' => $posts]);
     }
      public function createPost(){
-        return view('posts.add');
+        $users = User::select('id','name')->get();
+        return view('posts.add', compact('users'));
     }
     public function storePost(StorePostRequest $request){
         $post = new Post();

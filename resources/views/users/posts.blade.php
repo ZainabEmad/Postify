@@ -8,7 +8,7 @@
 
         <div class="col-12">
             <a href="{{ route('create.post') }}" class="btn btn-primary my-3">Add New Post</a>
-            <h1 class="p-3 border text-center my-3">All Posts</h1>
+            <h1 class="p-3 border text-center my-3">All Posts For {{ $user->name }}</h1>
         </div>
         <div class="col-12">
                 <div class="card">
@@ -24,13 +24,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($posts as $post)
+                            @foreach ($user->posts as $post)
                             <tr>
                                 
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $post->title }}</td>
                                 <td>{{ Str::limit($post->description, 50) }}</td>
                                 <td>{{ $post->user->name }}</td>
+
 
 
                                  <td>
@@ -50,9 +51,6 @@
                         </tbody>
                     </table>
                     </div>
-        </div>
-        {{ $posts->links('pagination::bootstrap-5') }}
-    </div>
 </div>
 
 @endsection

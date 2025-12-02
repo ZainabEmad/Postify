@@ -6,9 +6,7 @@
 <form action="{{ route('store.post') }}" method="POST" class="form">
     @csrf
 
-    @if(session()->get('success') != null)
-    <h5 class="text-success my-2">{{ session()->get('success') }}</h5>
-    @endif
+    @include('inc.message')
 
   <div class="mb-3">
     <label for="">Post Title</label>
@@ -23,12 +21,14 @@
   <div class="mb-3">
     <label for="exampleFormControlSelect1">Writer</label>
     <select class="form-control @error('user_id') is-invalid @enderror" name="user_id">
-      <option value="1" {{ old('user_id') == 1 ? 'selected' : '' }}>zainab</option>
-      <option value="2" {{ old('user_id') == 2 ? 'selected' : '' }}>hala</option>
-      <option value="3" {{ old('user_id') == 3 ? 'selected' : '' }}>sara</option>
-      <option value="4" {{ old('user_id') == 4 ? 'selected' : '' }}>hoda</option>
+
+      @foreach ($users as $user)
+      <option value="{{ $user->id }}">{{ $user->name }}</option>
+      @endforeach
+
     </select>
   </div>
+
 
   @error('user_id')
   <div class="alert alert-danger">{{ $message }}</div>

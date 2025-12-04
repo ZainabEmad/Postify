@@ -19,6 +19,7 @@
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>writer</th>
+                                <th>Image</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
@@ -32,6 +33,11 @@
                                 <td>{{ Str::limit($post->description, 50) }}</td>
                                 <td>{{ $post->user->name }}</td>
 
+
+                                 <td>
+                                    <img src="{{$post->image() }}" alt="" 
+                                    class="rounded-circle shadow" width="150" height="150" style="object-fit: cover;"></img>
+                                </td>
 
                                  <td>
                                     <a href="{{ route('edit.post', $post->id) }}" class="btn btn-primary">Edit</a>

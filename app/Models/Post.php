@@ -12,9 +12,17 @@ class Post extends Model
         'title',
         'description',
         'user_id',
+        'image',
     ];
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function image(){
+        if($this->image){
+            return asset($this->image);
+        }
+            return asset("public/default.png");
     }
 }

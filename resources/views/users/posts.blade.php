@@ -32,8 +32,6 @@
                                 <td>{{ Str::limit($post->description, 50) }}</td>
                                 <td>{{ $post->user->name }}</td>
 
-
-
                                  <td>
                                     <a href="{{ route('edit.post', $post->id) }}" class="btn btn-primary">Edit</a>
                                 </td>

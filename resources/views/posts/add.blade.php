@@ -3,7 +3,7 @@
 
 <div class="col-8 mx-auto">
 
-<form action="{{ route('store.post') }}" method="POST" class="form">
+<form action="{{ route('store.post') }}" method="POST" class="form" enctype="multipart/form-data">
     @csrf
 
     @include('inc.message')
@@ -42,6 +42,17 @@
   @error('description')
   <div class="alert alert-danger">{{ $message }}</div>
   @enderror
+
+   <div class="mb-3">
+    <label for="">Image</label>
+    <input class="form-control @error('image') is-invalid @enderror" 
+    rows="3" type="file" name="image">
+  </div>
+  
+  @error('image')
+  <div class="alert alert-danger">{{ $message }}</div>
+  @enderror
+
   <div class="mb-3">
        <button type="submit" value="save" class="form-control bg-success">Save</button>
   </div>

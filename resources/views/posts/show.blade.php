@@ -14,6 +14,7 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $post->title }}</h5>
+                            <img src="{{ $post->image() }}" alt="" width="100%" height="100%" style="object-fit: cover;">
                             <p class="card-text">{{ $post->description }}</p>
                         </div>
                         </div>

@@ -11,7 +11,7 @@ class PostController extends Controller
 {
     //
     public function showAllPosts(){
-        $posts = Post::paginate();
+        $posts = Post::orderBy('id','DESC')->paginate();
         return view('home', ['posts' => $posts]);
     
     }
@@ -34,6 +34,9 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->description = $request->description;
         $post->user_id = $request->user_id;
+        $image = $request->file('image')->store('public');
+        $post->image = $image;
+        // dd($request->image);
         $post->save();
 
         return back()->with('success', 'Data Saved Successfully');

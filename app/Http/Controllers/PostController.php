@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Tag;
+use File;
+use Illuminate\Http\File as HttpFile;
 
 class PostController extends Controller
 {
@@ -27,7 +30,8 @@ class PostController extends Controller
     }
      public function createPost(){
         $users = User::select('id','name')->get();
-        return view('posts.add', compact('users'));
+        $tags = Tag::select('id', 'name')->get();
+        return view('posts.add', compact('users', 'tags'));
     }
     public function storePost(StorePostRequest $request){
         $post = new Post();
@@ -38,21 +42,34 @@ class PostController extends Controller
         $post->image = $image;
         // dd($request->image);
         $post->save();
+        // dd($request->tags);
+        $post->tags()->sync($request->tags ?? []);
 
         return back()->with('success', 'Data Saved Successfully');
     }
 
     public function editPost($id){
         $post = Post::findOrFail($id);
-        return view('posts.edit', compact('post'));
+        $users = User::select('id', 'name')->get();
+        $tags = Tag::select('id', 'name')->get();
+        return view('posts.edit', compact('post', 'users', 'tags'));
     }
 
     public function update(Request $request, $id){
         $post = Post::findOrFail($id);
+        $old_image =  $post->image;
         $post->title = $request->title;
+        $post->user_id = $request->user_id;
         $post->description = $request->description;
-        
+        if($request->hasFile('image')){
+            $new_image = $request->file('image')->store('public');
+            File::delete($old_image);
+            $post->image = $new_image;
+        }
         $post->save();
+
+        $post->tags()->detach();
+        $post->tags()->sync($request->tags ?? []);
         return redirect()
         ->route('posts.index')
         ->with('success', 'Data Updated Successfully');

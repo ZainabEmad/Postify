@@ -23,6 +23,10 @@ class Post extends Model
         if($this->image){
             return asset($this->image);
         }
-            return asset("public/default.png");
+            return asset("public/default.jpg");
+    }
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
     }
 }

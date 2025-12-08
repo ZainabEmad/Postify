@@ -19,6 +19,7 @@
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>writer</th>
+                                <th>Tags</th>
                                 <th>Image</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
@@ -32,7 +33,12 @@
                                 <td>{{ $post->title }}</td>
                                 <td>{{ Str::limit($post->description, 50) }}</td>
                                 <td>{{ $post->user->name }}</td>
-
+                                <td>
+                                    @foreach($post->tags as $tag)
+                                        <span class="badge bg-warning my-1">{{ $tag->name }}</span>
+                                        <br>
+                                    @endforeach
+                                </td>
 
                                  <td>
                                     <img src="{{$post->image() }}" alt="" 

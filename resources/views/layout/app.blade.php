@@ -18,10 +18,13 @@
           <a class="nav-link active" aria-current="page" href="{{ route('homepage') }}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('posts.index') }}">Posts</a>
+         <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+       </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('posts.index') }}">Posts</a>
         </li>
       </ul>
       <form class="d-flex" role="search" action="{{ route('search.post') }}" method="GET">

@@ -5,6 +5,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Database\Schema\PostgresBuilder;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,36 +23,44 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/',[PostController::class, 'showAllPosts'])
-     ->name('homepage');
-
-Route::get('/posts', [PostController::class, 'getAllPosts'])
-     ->name('posts.index');
-
-Route::get('/create/post', [PostController::class, 'createPost'])
-     ->name('create.post');
-
-Route::get('details/post/{id}',[PostController::class, 'showDetailsOfOnePost'])
-->name('details.post');
-
-Route::get('/edit/post/{id}',[PostController::class, 'editPost'])
-     ->name('edit.post');
-
-Route::post('store/posts', [PostController::class, 'storePost'])
-     ->name('store.post');
-
-Route::put('posts/update/{id}', [PostController::class, 'update'])
-     ->name('posts.update');
-
-Route::delete('/posts/{id}', [PostController::class, 'destroy'])
-     ->name('posts.destroy');
+->name('homepage');
 
 Route::get('/search/post', [PostController::class, 'searchPost'])
      ->name('search.post');
 
+Route::middleware('auth')->group(function(){
 
-Route::resource('/users', UserController::class);
+     Route::get('/posts', [PostController::class, 'getAllPosts'])
+          ->name('posts.index');
+     
+     Route::get('/create/post', [PostController::class, 'createPost'])
+          ->name('create.post');
+     
+     Route::get('details/post/{id}',[PostController::class, 'showDetailsOfOnePost'])
+     ->name('details.post');
+     
+     Route::get('/edit/post/{id}',[PostController::class, 'editPost'])
+          ->name('edit.post');
+     
+     Route::post('store/posts', [PostController::class, 'storePost'])
+          ->name('store.post');
+     
+     Route::put('posts/update/{id}', [PostController::class, 'update'])
+          ->name('posts.update');
+     
+     Route::delete('/posts/{id}', [PostController::class, 'destroy'])
+          ->name('posts.destroy');
+     
+     
+     Route::resource('/users', UserController::class);
+     
+     Route::get('/user/posts/{id}', [UserController::class, 'posts'])
+          ->name('user.posts');
+     
+     Route::resource('/tags',TagController::class);
 
-Route::get('/user/posts/{id}', [UserController::class, 'posts'])
-     ->name('user.posts');
+});
 
-Route::resource('/tags',TagController::class);
+Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

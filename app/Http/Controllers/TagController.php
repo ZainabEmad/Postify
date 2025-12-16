@@ -21,9 +21,10 @@ class TagController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Tag $tag)
     {
         //
+        $this->authorize('create',$tag);
         return view('tags.add');
     }
 

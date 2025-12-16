@@ -7,7 +7,9 @@
         @include('inc.message')
 
         <div class="col-12">
+            @can('create', App\Models\Post::class)
             <a href="{{ route('create.post') }}" class="btn btn-primary my-3">Add New Post</a>
+            @endcan
             <h1 class="p-3 border text-center my-3">All Posts</h1>
         </div>
         <div class="col-12">
@@ -35,8 +37,10 @@
                                 <td>{{ $post->user->name }}</td>
                                 <td>
                                     @foreach($post->tags as $tag)
-                                        <span class="badge bg-warning my-1">{{ $tag->name }}</span>
-                                        <br>
+                                        @can('postEdit', $post)
+                                            <span class="badge bg-warning my-1">{{ $tag->name }}</span>
+                                            <br>
+                                        @endcan
                                     @endforeach
                                 </td>
 
@@ -46,15 +50,18 @@
                                 </td>
 
                                  <td>
+                                    @can('postEdit', $post)
                                     <a href="{{ route('edit.post', $post->id) }}" class="btn btn-primary">Edit</a>
+                                    
                                 </td>
 
-                                <td><form action="{{ route('users.destroy', $post->id) }}" method="POST">
+                                <td><form action="{{ route('posts.destroy', $post->id) }}" method="POST">
                                     @csrf
                                      @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         Delete
                                     </button>
+                                    @endcan
                                 </form>
                             </td>
                         </tr>

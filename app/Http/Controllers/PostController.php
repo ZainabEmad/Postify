@@ -29,11 +29,13 @@ class PostController extends Controller
         return view('posts.index', ['posts' => $posts]);
     }
      public function createPost(){
+        $this->authorize('create', Post::class);
         $users = User::select('id','name')->get();
         $tags = Tag::select('id', 'name')->get();
         return view('posts.add', compact('users', 'tags'));
     }
     public function storePost(StorePostRequest $request){
+        $this->authorize('create', Post::class);
         $post = new Post();
         $post->title = $request->title;
         $post->description = $request->description;
@@ -55,7 +57,8 @@ class PostController extends Controller
         return view('posts.edit', compact('post', 'users', 'tags'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id, Post $post){
+        $this->authorize('postEdit', $post);
         $post = Post::findOrFail($id);
         $old_image =  $post->image;
         $post->title = $request->title;
@@ -75,7 +78,8 @@ class PostController extends Controller
         ->with('success', 'Data Updated Successfully');
     }
 
-    public function destroy($id){
+    public function destroy($id, Post $post){
+        $this->authorize('postEdit', $post);
         $posts = Post::findOrFail($id);
         $posts->Delete();
 

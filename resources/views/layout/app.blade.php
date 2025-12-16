@@ -14,19 +14,27 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ route('homepage') }}">Home</a>
+        <li class="nav-item @if(request()->is('home*')) active @endif">
+          <a class="nav-link" aria-current="page" href="{{ route('homepage') }}">Home</a>
         </li>
+        <style>
+            .active{
+              font-weight: bold;
+            }
+        </style>
         @auth
-        <li class="nav-item">
-         <a class="nav-link" href="{{ route('users.index') }}">Users</a>
-       </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('posts.index') }}">Posts</a>
-        </li>
+        <li class="nav-item @if(request()->is('users*')) active @endif">
+          @can('viewHeaderElements', App\Models\Post::class)
+              <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+              </li>
+             
+              <li class="nav-item @if(request()->is('tags*')) active @endif">
+                <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
+              </li>
+              @endcan
+              <li class="nav-item @if(request()->is('posts*')) active @endif">
+                <a class="nav-link" href="{{ route(name: 'posts.index') }}">Posts</a>
+              </li>
         @endauth
       </ul>
       <form class="d-flex" role="search" action="{{ route('search.post') }}" method="GET">

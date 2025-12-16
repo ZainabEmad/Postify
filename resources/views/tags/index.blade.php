@@ -7,7 +7,9 @@
         @include('inc.message')
 
         <div class="col-12">
+            @can('create', App\Models\Tag::class)
             <a href="{{ route('tags.create') }}" class="btn btn-primary my-3">Add New Tag</a>
+            @endcan
             <h1 class="p-3 border text-center my-3">All Tags</h1>
         </div>
         <div class="col-12">

@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 //     return view('home');
 // });
 
-Route::get('/',[PostController::class, 'showAllPosts'])
+Route::get('/home',[PostController::class, 'showAllPosts'])
 ->name('homepage');
 
 Route::get('/search/post', [PostController::class, 'searchPost'])
@@ -33,16 +33,16 @@ Route::middleware('auth')->group(function(){
      Route::get('/posts', [PostController::class, 'getAllPosts'])
           ->name('posts.index');
      
-     Route::get('/create/post', [PostController::class, 'createPost'])
+     Route::get('/posts/create', [PostController::class, 'createPost'])
           ->name('create.post');
      
-     Route::get('details/post/{id}',[PostController::class, 'showDetailsOfOnePost'])
+     Route::get('/posts/details/{id}',[PostController::class, 'showDetailsOfOnePost'])
      ->name('details.post');
      
-     Route::get('/edit/post/{id}',[PostController::class, 'editPost'])
+     Route::get('/posts/edit/{id}',[PostController::class, 'editPost'])
           ->name('edit.post');
      
-     Route::post('store/posts', [PostController::class, 'storePost'])
+     Route::post('/posts/store', [PostController::class, 'storePost'])
           ->name('store.post');
      
      Route::put('posts/update/{id}', [PostController::class, 'update'])
@@ -52,9 +52,10 @@ Route::middleware('auth')->group(function(){
           ->name('posts.destroy');
      
      
-     Route::resource('/users', UserController::class);
+    Route::resource('/users', UserController::class)
+     ->middleware('can:viewAny,App\Models\User');
      
-     Route::get('/user/posts/{id}', [UserController::class, 'posts'])
+     Route::get('/users/posts/{id}', [UserController::class, 'posts'])
           ->name('user.posts');
      
      Route::resource('/tags',TagController::class);

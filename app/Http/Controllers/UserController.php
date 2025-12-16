@@ -13,6 +13,10 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('CheckUserAuth');
+    }
     public function index()
     {
         //
